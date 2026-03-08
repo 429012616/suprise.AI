@@ -2,10 +2,9 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>🎁 Surprise</title>
-
 <style>
-
 body{
 margin:0;
 height:100vh;
@@ -13,9 +12,10 @@ display:flex;
 justify-content:center;
 align-items:center;
 font-family:Arial;
-background: linear-gradient(-45deg,#ff9a9e,#fad0c4,#a1c4fd,#c2e9fb);
-background-size:400% 400%;
-animation:bgmove 12s infinite linear;
+background-image:url("imgs/AI.jpg");
+background-size:cover;
+background-position:center center;
+background-repeat:no-repeat;
 overflow:hidden;
 }
 
@@ -25,9 +25,9 @@ overflow:hidden;
 100%{background-position:0% 50%;}
 }
 
-#panel{
-background:white;
-padding:40px;
+#petalStage,#dodgeStage,#puzzleStage,#geoStage,#panel{
+background:rgba(255,255,255,0.92);
+padding:24px;
 border-radius:20px;
 box-shadow:0 20px 40px rgba(0,0,0,0.2);
 text-align:center;
@@ -36,11 +36,185 @@ position:relative;
 z-index:10;
 }
 
-@keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-10px)}
-100%{transform:translateY(0)}
+#panel{display:none;}
+#petalStage{display:none;}
+#dodgeStage{display:none;}
+#puzzleStage{display:none;}
+#geoStage{display:none;}
+
+#introStage{
+position:relative;
+z-index:12;
+text-align:center;
+padding:44px 48px;
+border-radius:24px;
+background:rgba(255,255,255,0.2);
+backdrop-filter:blur(8px);
+box-shadow:0 24px 60px rgba(0,0,0,0.28);
+animation:introFloat 3.5s ease-in-out infinite;
 }
+
+#introTitle{
+margin:0 0 16px;
+font-size:clamp(42px,9vw,96px);
+font-weight:900;
+letter-spacing:4px;
+color:#fff;
+text-shadow:0 0 16px rgba(255,255,255,0.95),0 0 34px rgba(255,120,180,0.85),0 0 68px rgba(120,180,255,0.75);
+}
+
+#introStart{
+font-size:22px;
+padding:12px 30px;
+border-radius:999px;
+background:linear-gradient(135deg,#ff5fa2,#7a6bff);
+box-shadow:0 10px 28px rgba(122,107,255,0.55);
+}
+
+@keyframes introFloat{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+}
+
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0);}
+}
+
+#puzzleTitle{margin:4px 0 10px;font-size:28px;}
+#puzzleHint{margin:0 0 14px;color:#333;}
+#petalTitle{margin:4px 0 10px;font-size:28px;}
+#petalHint{margin:0 0 10px;color:#333;}
+#petalStatus{margin:0 0 12px;color:#ff4d8d;font-weight:700;}
+#dodgeTitle{margin:4px 0 10px;font-size:28px;}
+#dodgeHint{margin:0 0 10px;color:#333;}
+#dodgeStatus{margin:0 0 12px;color:#444;font-weight:700;}
+#petalArena{
+width:min(88vw,88vh,680px);
+height:min(60vh,500px);
+max-width:680px;
+position:relative;
+overflow:hidden;
+border-radius:16px;
+background:linear-gradient(180deg,rgba(255,230,240,0.9),rgba(255,255,255,0.75));
+box-shadow:inset 0 0 0 2px rgba(255,255,255,0.7),0 12px 28px rgba(0,0,0,0.18);
+}
+#dodgeArena{
+width:min(88vw,88vh,680px);
+height:min(60vh,500px);
+max-width:680px;
+position:relative;
+overflow:hidden;
+border-radius:16px;
+background:linear-gradient(180deg,rgba(230,245,255,0.92),rgba(255,255,255,0.8));
+box-shadow:inset 0 0 0 2px rgba(255,255,255,0.7),0 12px 28px rgba(0,0,0,0.18);
+touch-action:none;
+}
+.runner{
+position:absolute;
+width:54px;
+height:54px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:32px;
+left:50%;
+bottom:10px;
+transform:translateX(-50%);
+}
+.rock{
+position:absolute;
+width:44px;
+height:44px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+top:-50px;
+}
+#dodgeMobile{
+display:none;
+margin-top:10px;
+gap:10px;
+justify-content:center;
+}
+#dodgeMobile button{
+margin-left:0;
+padding:12px 18px;
+font-size:20px;
+}
+@media (max-width: 768px){
+#dodgeArena{
+height:min(54vh,420px);
+}
+#dodgeMobile{
+display:flex;
+}
+}
+.petal{
+position:absolute;
+top:-40px;
+font-size:34px;
+width:52px;
+height:52px;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+user-select:none;
+animation:petalSpin linear infinite;
+}
+.poop{
+position:absolute;
+top:-40px;
+font-size:34px;
+width:52px;
+height:52px;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+user-select:none;
+}
+@keyframes petalSpin{
+from{transform:rotate(0deg);}
+to{transform:rotate(360deg);}
+}
+#puzzleActions{margin-top:14px;}
+.stage-actions{margin-top:12px;}
+.cheat-btn{
+background:#7c4dff;
+margin-left:0;
+}
+#panel button{margin-left:10px;}
+#geoStage input{
+display:block;
+width:320px;
+max-width:78vw;
+margin:10px auto;
+}
+#geoStage button{margin-left:0;margin-top:8px;}
+#puzzleBoard{
+width:min(88vw,88vh,680px);
+height:min(88vw,88vh,680px);
+max-width:680px;
+max-height:680px;
+position:relative;
+border-radius:16px;
+overflow:hidden;
+background:#f0f0f0;
+box-shadow:inset 0 0 0 3px rgba(255,255,255,0.5),0 12px 28px rgba(0,0,0,0.18);
+}
+
+.piece{
+position:absolute;
+box-sizing:border-box;
+border:1px solid rgba(255,255,255,0.65);
+cursor:pointer;
+transition:transform 0.16s ease;
+}
+.piece:hover{filter:brightness(1.08);}
 
 input{
 padding:10px;
@@ -48,14 +222,13 @@ font-size:18px;
 border-radius:8px;
 border:1px solid #ccc;
 }
-
 button{
 padding:10px 20px;
 font-size:18px;
 border:none;
 border-radius:8px;
 background:#ff6b81;
-color:white;
+color:#fff;
 cursor:pointer;
 margin-left:10px;
 }
@@ -72,32 +245,22 @@ box-shadow:0 20px 40px rgba(0,0,0,0.3);
 transition:all 1s ease;
 z-index:5;
 }
-
 .show{
 opacity:1 !important;
 transform:translate(-50%,-50%) scale(1) !important;
 }
 
-/* 熊猫 */
-
-#panda{
+.panda{
 position:absolute;
 width:120px;
-display:none;  /* 初始隐藏 */
+display:block;
 transition:0.3s;
 z-index:4;
-mix-blend-mode:multiply; /* 让白底视觉上透明 */
+mix-blend-mode:multiply;
 transform-origin:center center;
-clip-path:inset(0 0 50% 0); /* 只显示上半部分（头部） */
 --rot:0deg;
 }
-
-/* 熊猫眨眼 */
-
-.blink{
-animation:blink 4s infinite;
-}
-
+.blink{animation:blink 4s infinite;}
 @keyframes blink{
 0%,92%,100%{transform:rotate(var(--rot)) scaleY(1);}
 95%{transform:rotate(var(--rot)) scaleY(0.1);}
@@ -110,194 +273,1018 @@ left:0;
 pointer-events:none;
 z-index:0;
 }
-
+#fxLayer{
+position:fixed;
+inset:0;
+overflow:hidden;
+pointer-events:none;
+z-index:6;
+}
+#floatPandas{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:2;
+overflow:hidden;
+}
+.bg-panda{
+position:absolute;
+width:var(--size,90px);
+left:var(--x,0px);
+top:var(--y,0px);
+opacity:var(--alpha,0.28);
+mix-blend-mode:multiply;
+filter:drop-shadow(0 8px 16px rgba(0,0,0,0.22));
+animation:drift var(--dur,18s) ease-in-out infinite alternate,spin calc(var(--dur,18s) * 0.8) linear infinite;
+animation-delay:var(--delay,0s);
+}
+.praise-token{
+position:absolute;
+left:0;
+top:0;
+font-weight:900;
+font-size:var(--size,56px);
+color:#fffef7;
+letter-spacing:2px;
+white-space:nowrap;
+opacity:0.95;
+text-shadow:0 0 10px rgba(255,255,255,0.9),0 0 20px rgba(255,225,110,0.9),0 0 40px rgba(255,136,90,0.8),0 0 70px rgba(255,80,140,0.6);
+animation:tokenFloat var(--dur,4.8s) ease-in-out infinite,tokenGlow var(--glow,2.6s) ease-in-out infinite;
+animation-delay:var(--delay,0s);
+}
+@keyframes tokenFloat{
+0%,100%{transform:translate(-50%,-50%) translate(0,0) rotate(-3deg);}
+50%{transform:translate(-50%,-50%) translate(0,-18px) rotate(3deg);}
+}
+@keyframes tokenGlow{
+0%,100%{opacity:0.75;filter:brightness(1);}
+50%{opacity:1;filter:brightness(1.25);}
+}
+@keyframes drift{
+0%{transform:translate(0,0);}
+25%{transform:translate(var(--dx1,40px),var(--dy1,-20px));}
+50%{transform:translate(var(--dx2,-55px),var(--dy2,35px));}
+75%{transform:translate(var(--dx3,24px),var(--dy3,-40px));}
+100%{transform:translate(var(--dx4,-35px),var(--dy4,24px));}
+}
+@keyframes spin{from{rotate:-6deg;}to{rotate:6deg;}}
 </style>
 </head>
-
 <body>
+<div id="fxLayer"></div>
+<div id="floatPandas"></div>
 
-<div id="panel">
-<h2>🎁 输入密码领取奖励</h2>
-<input id="pwd" type="password" placeholder="输入密码">
-<button onclick="check()">解锁</button>
+<div id="introStage">
+<h1 id="introTitle">爱酱超级挑战</h1>
+<button id="introStart" onclick="startGame()">开始闯关</button>
 </div>
 
-<img id="reward" src="imgs/image.jpg">
-<img id="panda" src="imgs/pandas.jpg" class="blink">
+<div id="petalStage">
+<h2 id="petalTitle">🌸 花瓣收集</h2>
+<p id="petalHint">30秒内收集足够花瓣即可进入拼图关</p>
+<p id="petalStatus">已收集 0 / 40（剩余 30s）</p>
+<div id="petalArena"></div>
+<div class="stage-actions">
+<button class="cheat-btn" onclick="cheatSkip()">作弊跳过本关</button>
+</div>
+</div>
 
+<div id="dodgeStage">
+<h2 id="dodgeTitle">🚧 躲避障碍</h2>
+<p id="dodgeHint">吃到食物 +2s，碰到 💩 直接结束</p>
+<p id="dodgeStatus">剩余 30s</p>
+<div id="dodgeArena">
+<div id="runner" class="runner">🐼</div>
+</div>
+<div id="dodgeMobile">
+<button id="btnLeft">⬅️ 左移</button>
+<button id="btnRight">右移 ➡️</button>
+</div>
+<div class="stage-actions">
+<button class="cheat-btn" onclick="cheatSkip()">作弊跳过本关</button>
+</div>
+</div>
+
+<div id="puzzleStage">
+<h2 id="puzzleTitle">🧩 拼图第 1 关 / 3</h2>
+<p id="puzzleHint">点击与空白块相邻的拼图块完成复原</p>
+<div id="puzzleBoard"></div>
+<div id="puzzleActions">
+<button class="cheat-btn" onclick="cheatSkip()">作弊跳过本关</button>
+</div>
+</div>
+
+<div id="geoStage">
+<h2>❓ 问答挑战</h2>
+<p>如果SENSEI所在位置的经度为x，纬度为y，则经度为（180-x），纬度为（90-y）的国家是：（英文回答，首字母小写）</p>
+<input id="answerInput" type="text" placeholder="Input English answer">
+<button onclick="checkGeo()">提交答案</button>
+<div class="stage-actions">
+<button class="cheat-btn" onclick="cheatSkip()">作弊跳过本关</button>
+</div>
+</div>
+
+<div id="panel">
+<h2>🐷 SENSEI是什么动物？（In English）</h2>
+<input id="pwd" type="password" placeholder="输入密码">
+<button onclick="check()">解锁</button>
+<div class="stage-actions">
+<button class="cheat-btn" onclick="cheatSkip()">作弊跳过本关</button>
+</div>
+</div>
+
+<img id="reward" alt="reward">
 <canvas id="confetti"></canvas>
 
 <script>
-
+const puzzleImages=["imgs/puzzle0.png","imgs/puzzle1.jpg","imgs/puzzle2.jpg"];
+const GRID=3;
+const TOTAL=GRID*GRID;
+const BLANK=TOTAL-1;
+const introStage=document.getElementById("introStage");
+const petalStage=document.getElementById("petalStage");
+const petalArena=document.getElementById("petalArena");
+const petalStatus=document.getElementById("petalStatus");
+const dodgeStage=document.getElementById("dodgeStage");
+const dodgeArena=document.getElementById("dodgeArena");
+const dodgeStatus=document.getElementById("dodgeStatus");
+const runner=document.getElementById("runner");
+const btnLeft=document.getElementById("btnLeft");
+const btnRight=document.getElementById("btnRight");
+const puzzleStage=document.getElementById("puzzleStage");
+const puzzleTitle=document.getElementById("puzzleTitle");
+const puzzleBoard=document.getElementById("puzzleBoard");
+const geoStage=document.getElementById("geoStage");
+const answerInput=document.getElementById("answerInput");
+const panel=document.getElementById("panel");
 const input=document.getElementById("pwd");
+const reward=document.getElementById("reward");
+const ENCRYPTED_REWARD_URL="imgs/reward.enc";
+const REWARD_PASSPHRASE="AiyoSensei_2026_LoveKey#47";
+const REWARD_MIME_TYPE="image/jpeg";
+const STAGE_ANSWER="russia";
+
+let levelIndex=0;
+let order=[];
+let pieces=[];
+let tileSize=0;
+let puzzleLocked=false;
+
 let unlocked=false;
 let pandaTimer=null;
+const PANDA_COUNT=12;
+const PANDA_SIZE=120;
+const PANDA_MIN_DIST=110;
+const EXPOSE_RATIO=0.7;
+const pandaPool=[];
+const FLOAT_PANDA_COUNT=30;
+const floatPandasHost=document.getElementById("floatPandas");
+const fxLayer=document.getElementById("fxLayer");
+const PRAISE_COUNT=22;
+let transparentPandaSrc="";
+let transparentPigSrc="";
+let rewardObjectUrl="";
+const praisePool=[];
+const PETAL_TARGET=40;
+const PETAL_DURATION=30;
+let petalCount=0;
+let petalTimeLeft=PETAL_DURATION;
+let petalRunning=false;
+let petalSpawnTimer=null;
+let petalTickTimer=null;
+const PETAL_HIT_RADIUS=38;
+const EXTRA_POOP_RATE=0.55;
+const DODGE_DURATION=30;
+let dodgeTimeLeft=DODGE_DURATION;
+let dodgeRunning=false;
+let dodgeSpawnTimer=null;
+let dodgeTickTimer=null;
+let dodgeMoveTimer=null;
+let runnerX=0;
+let runnerDir=0;
+let rocks=[];
+const POOP_IN_DODGE_RATE=0.42;
+let touchDragging=false;
 
 input.addEventListener("keydown",function(e){
 if(e.key==="Enter"){check();}
 });
+answerInput.addEventListener("keydown",function(e){
+if(e.key==="Enter"){checkGeo();}
+});
 
-function check(){
-
-if(unlocked){
-return;
+function boardSize(){
+const rect=puzzleBoard.getBoundingClientRect();
+return rect.width;
 }
 
-if(input.value==="1234"){
-unlocked=true;
+function solvedOrder(){
+const arr=[];
+for(let i=0;i<TOTAL;i++){arr.push(i);}
+return arr;
+}
 
-document.getElementById("panel").style.display="none";
+function neighbors(blankIdx){
+const arr=[];
+const r=Math.floor(blankIdx/GRID);
+const c=blankIdx%GRID;
+if(r>0){arr.push(blankIdx-GRID);}
+if(r<GRID-1){arr.push(blankIdx+GRID);}
+if(c>0){arr.push(blankIdx-1);}
+if(c<GRID-1){arr.push(blankIdx+1);}
+return arr;
+}
 
-let img=document.getElementById("reward");
-img.classList.add("show");
+function shuffleByMoves(moves){
+const arr=solvedOrder();
+let blank=BLANK;
+let prev=-1;
+for(let i=0;i<moves;i++){
+let opts=neighbors(blank).filter(function(v){return v!==prev;});
+if(opts.length===0){opts=neighbors(blank);}
+const pick=opts[Math.floor(Math.random()*opts.length)];
+const tmp=arr[pick];
+arr[pick]=arr[blank];
+arr[blank]=tmp;
+prev=blank;
+blank=pick;
+}
+return arr;
+}
 
-startConfetti();
-startPanda();
+function loadPuzzle(level){
+levelIndex=level;
+puzzleLocked=false;
+puzzleTitle.textContent="🧩 拼图第 "+(level+1)+" 关 / 3";
+const shuffleSteps=18+level*6;
+order=shuffleByMoves(shuffleSteps);
+while(isSolved()){
+order=shuffleByMoves(shuffleSteps);
+}
+renderPuzzle(true);
+}
 
+function startGame(){
+introStage.style.display="none";
+setDefaultGradientBackground();
+petalStage.style.display="block";
+startPetalGame();
+}
+
+function clearPetalTimers(){
+if(petalSpawnTimer){clearInterval(petalSpawnTimer);petalSpawnTimer=null;}
+if(petalTickTimer){clearInterval(petalTickTimer);petalTickTimer=null;}
+}
+
+function updatePetalStatus(){
+petalStatus.textContent="已收集 "+petalCount+" / "+PETAL_TARGET+"（剩余 "+petalTimeLeft+"s）";
+}
+
+function removeAllPetals(){
+while(petalArena.firstChild){petalArena.removeChild(petalArena.firstChild);}
+}
+
+function finishPetalGame(success){
+petalRunning=false;
+clearPetalTimers();
+if(success){
+petalStage.style.display="none";
+dodgeStage.style.display="block";
+startDodgeGame();
+}else{
+alert("时间到啦，再试一次花瓣收集！");
+startPetalGame();
+}
+}
+
+function spawnPetal(){
+if(!petalRunning){return;}
+spawnFallingItem(false);
+if(Math.random()<EXTRA_POOP_RATE){
+spawnFallingItem(true);
+}
+}
+
+function spawnFallingItem(isPoop){
+const el=document.createElement("div");
+el.className=isPoop?"poop":"petal";
+el.textContent=isPoop?"💩":"🌸";
+const arenaW=petalArena.clientWidth;
+const fallSec=isPoop?(1.4+Math.random()*0.9):(1.9+Math.random()*1.8);
+const drift=(-50+Math.random()*100);
+const baseLeft=Math.max(8,Math.random()*(arenaW-40));
+const startX=baseLeft;
+el.style.left=baseLeft+"px";
+if(!isPoop){
+el.style.animationDuration=(1.8+Math.random()*2.4)+"s";
+}
+petalArena.appendChild(el);
+const born=Date.now();
+
+el.addEventListener("click",function(){
+if(isPoop){collectPoop(el);}else{collectPetal(el);}
+});
+
+const mover=setInterval(function(){
+if(!petalRunning || !el.isConnected){clearInterval(mover);return;}
+const t=(Date.now()-born)/(fallSec*1000);
+if(t>=1){
+el.remove();
+clearInterval(mover);
+return;
+}
+const y=t*(petalArena.clientHeight+60)-40;
+const x=isPoop?startX:baseLeft+Math.sin(t*6.28)*drift*0.08;
+el.style.top=y+"px";
+el.style.left=x+"px";
+},16);
+}
+
+function collectPetal(el){
+ if(!petalRunning || !el || !el.isConnected){return;}
+ petalCount++;
+ updatePetalStatus();
+ el.remove();
+ if(petalCount>=PETAL_TARGET){
+ finishPetalGame(true);
+ }
+}
+
+function collectPoop(el){
+ if(!petalRunning || !el || !el.isConnected){return;}
+ petalCount=Math.max(0,petalCount-1);
+ updatePetalStatus();
+ el.remove();
+}
+
+function startPetalGame(){
+petalCount=0;
+petalTimeLeft=PETAL_DURATION;
+petalRunning=true;
+removeAllPetals();
+updatePetalStatus();
+clearPetalTimers();
+petalSpawnTimer=setInterval(spawnPetal,300);
+petalTickTimer=setInterval(function(){
+petalTimeLeft--;
+updatePetalStatus();
+if(petalTimeLeft<=0){
+finishPetalGame(petalCount>=PETAL_TARGET);
+}
+},1000);
+}
+
+petalArena.addEventListener("click",function(e){
+ if(!petalRunning){return;}
+ const petals=petalArena.querySelectorAll(".petal,.poop");
+ let best=null;
+ let bestDist=PETAL_HIT_RADIUS;
+ for(let i=0;i<petals.length;i++){
+ const r=petals[i].getBoundingClientRect();
+ const cx=r.left+r.width/2;
+ const cy=r.top+r.height/2;
+ const d=Math.hypot(e.clientX-cx,e.clientY-cy);
+ if(d<=bestDist){
+ bestDist=d;
+ best=petals[i];
+ }
+ }
+ if(best){
+ if(best.classList.contains("poop")){
+ collectPoop(best);
+ }else{
+ collectPetal(best);
+ }
+ }
+});
+
+function clearDodgeTimers(){
+if(dodgeSpawnTimer){clearInterval(dodgeSpawnTimer);dodgeSpawnTimer=null;}
+if(dodgeTickTimer){clearInterval(dodgeTickTimer);dodgeTickTimer=null;}
+if(dodgeMoveTimer){clearInterval(dodgeMoveTimer);dodgeMoveTimer=null;}
+}
+
+function resetRocks(){
+for(let i=0;i<rocks.length;i++){
+rocks[i].el.remove();
+}
+rocks=[];
+}
+
+function updateDodgeStatus(){
+dodgeStatus.textContent="剩余 "+dodgeTimeLeft+"s";
+}
+
+function spawnRock(){
+if(!dodgeRunning){return;}
+const el=document.createElement("div");
+el.className="rock";
+const isPoop=Math.random()<POOP_IN_DODGE_RATE;
+const foods=["🍎","🍓","🍕","🍔","🍪","🍉"];
+el.textContent=isPoop?"💩":foods[Math.floor(Math.random()*foods.length)];
+const size=38+Math.random()*18;
+const speed=3.2+Math.random()*2.1;
+const x=Math.random()*(dodgeArena.clientWidth-size);
+el.style.width=size+"px";
+el.style.height=size+"px";
+el.style.left=x+"px";
+el.style.top="-52px";
+dodgeArena.appendChild(el);
+rocks.push({el:el,x:x,y:-52,size:size,speed:speed,type:isPoop?"poop":"food"});
+}
+
+function isHit(a,b){
+return !(a.right<b.left||a.left>b.right||a.bottom<b.top||a.top>b.bottom);
+}
+
+function shrinkRect(rect,ratio){
+const w=rect.width*ratio;
+const h=rect.height*ratio;
+const cx=rect.left+rect.width/2;
+const cy=rect.top+rect.height/2;
+return {
+left:cx-w/2,
+right:cx+w/2,
+top:cy-h/2,
+bottom:cy+h/2,
+width:w,
+height:h
+};
+}
+
+function failDodge(){
+dodgeRunning=false;
+clearDodgeTimers();
+resetRocks();
+alert("撞到障碍了，再来一次！");
+startDodgeGame();
+}
+
+function finishDodge(){
+dodgeRunning=false;
+clearDodgeTimers();
+resetRocks();
+dodgeStage.style.display="none";
+puzzleStage.style.display="block";
+loadPuzzle(0);
+}
+
+function stepDodge(){
+if(!dodgeRunning){return;}
+const arenaW=dodgeArena.clientWidth;
+const runnerW=runner.offsetWidth||54;
+if(runnerDir!==0){
+runnerX+=runnerDir*7;
+}
+runnerX=Math.max(0,Math.min(arenaW-runnerW,runnerX));
+runner.style.left=runnerX+"px";
+runner.style.transform="none";
+
+const rr=runner.getBoundingClientRect();
+for(let i=rocks.length-1;i>=0;i--){
+const r=rocks[i];
+r.y+=r.speed;
+r.el.style.top=r.y+"px";
+if(r.y>dodgeArena.clientHeight+60){
+r.el.remove();
+rocks.splice(i,1);
+continue;
+}
+const cr=r.el.getBoundingClientRect();
+const hitBox=r.type==="poop"?shrinkRect(cr,0.62):shrinkRect(cr,0.8);
+if(isHit(rr,hitBox)){
+if(r.type==="poop"){
+failDodge();
+return;
+}
+dodgeTimeLeft+=2;
+updateDodgeStatus();
+r.el.remove();
+rocks.splice(i,1);
+}
+}
+}
+
+function startDodgeGame(){
+dodgeRunning=true;
+dodgeTimeLeft=DODGE_DURATION;
+clearDodgeTimers();
+resetRocks();
+runnerDir=0;
+const arenaW=dodgeArena.clientWidth;
+runnerX=(arenaW-(runner.offsetWidth||54))/2;
+runner.style.left=runnerX+"px";
+runner.style.transform="none";
+updateDodgeStatus();
+spawnRock();
+dodgeSpawnTimer=setInterval(spawnRock,420);
+dodgeMoveTimer=setInterval(stepDodge,16);
+dodgeTickTimer=setInterval(function(){
+dodgeTimeLeft--;
+updateDodgeStatus();
+if(dodgeTimeLeft<=0){
+finishDodge();
+}
+},1000);
+}
+
+dodgeArena.addEventListener("mousemove",function(e){
+if(!dodgeRunning){return;}
+const rect=dodgeArena.getBoundingClientRect();
+const runnerW=runner.offsetWidth||54;
+runnerX=e.clientX-rect.left-runnerW/2;
+});
+
+function moveRunnerByClientX(clientX){
+if(!dodgeRunning){return;}
+const rect=dodgeArena.getBoundingClientRect();
+const runnerW=runner.offsetWidth||54;
+runnerX=clientX-rect.left-runnerW/2;
+}
+
+dodgeArena.addEventListener("touchstart",function(e){
+if(!dodgeRunning){return;}
+touchDragging=true;
+const t=e.touches[0];
+moveRunnerByClientX(t.clientX);
+e.preventDefault();
+},{passive:false});
+
+dodgeArena.addEventListener("touchmove",function(e){
+if(!dodgeRunning || !touchDragging){return;}
+const t=e.touches[0];
+moveRunnerByClientX(t.clientX);
+e.preventDefault();
+},{passive:false});
+
+dodgeArena.addEventListener("touchend",function(){
+touchDragging=false;
+});
+
+btnLeft.addEventListener("touchstart",function(e){
+runnerDir=-1;
+e.preventDefault();
+},{passive:false});
+btnLeft.addEventListener("touchend",function(){if(runnerDir<0){runnerDir=0;}});
+btnRight.addEventListener("touchstart",function(e){
+runnerDir=1;
+e.preventDefault();
+},{passive:false});
+btnRight.addEventListener("touchend",function(){if(runnerDir>0){runnerDir=0;}});
+
+btnLeft.addEventListener("mousedown",function(){runnerDir=-1;});
+btnLeft.addEventListener("mouseup",function(){if(runnerDir<0){runnerDir=0;}});
+btnRight.addEventListener("mousedown",function(){runnerDir=1;});
+btnRight.addEventListener("mouseup",function(){if(runnerDir>0){runnerDir=0;}});
+
+window.addEventListener("keydown",function(e){
+if(!dodgeRunning){return;}
+if(e.key==="ArrowLeft"){runnerDir=-1;}
+if(e.key==="ArrowRight"){runnerDir=1;}
+});
+window.addEventListener("keyup",function(e){
+if(e.key==="ArrowLeft"&&runnerDir<0){runnerDir=0;}
+if(e.key==="ArrowRight"&&runnerDir>0){runnerDir=0;}
+});
+
+function renderPuzzle(rebuild){
+tileSize=boardSize()/GRID;
+if(rebuild){
+pieces=[];
+while(puzzleBoard.firstChild){puzzleBoard.removeChild(puzzleBoard.firstChild);}
+for(let val=0;val<TOTAL-1;val++){
+const piece=document.createElement("div");
+piece.className="piece";
+piece.dataset.value=String(val);
+piece.style.backgroundImage="url('"+puzzleImages[levelIndex]+"')";
+piece.style.backgroundSize=(tileSize*GRID)+"px "+(tileSize*GRID)+"px";
+piece.addEventListener("click",onPieceClick);
+puzzleBoard.appendChild(piece);
+pieces[val]=piece;
+}
+}
+for(let idx=0;idx<TOTAL;idx++){
+const val=order[idx];
+if(val===BLANK){continue;}
+const piece=pieces[val];
+const row=Math.floor(idx/GRID);
+const col=idx%GRID;
+piece.style.width=tileSize+"px";
+piece.style.height=tileSize+"px";
+piece.style.transform="translate("+Math.round(col*tileSize)+"px,"+Math.round(row*tileSize)+"px)";
+const srcRow=Math.floor(val/GRID);
+const srcCol=val%GRID;
+piece.style.backgroundPosition=(-Math.round(srcCol*tileSize))+"px "+(-Math.round(srcRow*tileSize))+"px";
+}
+}
+
+function onPieceClick(e){
+if(puzzleLocked){return;}
+const value=Number(e.currentTarget.dataset.value);
+const tileIdx=order.indexOf(value);
+const blankIdx=order.indexOf(BLANK);
+if(!neighbors(blankIdx).includes(tileIdx)){return;}
+order[blankIdx]=value;
+order[tileIdx]=BLANK;
+renderPuzzle(false);
+if(isSolved()){
+puzzleLocked=true;
+setTimeout(nextPuzzleStep,520);
+}
+}
+
+function isSolved(){
+for(let i=0;i<TOTAL;i++){
+if(order[i]!==i){return false;}
+}
+return true;
+}
+
+function nextPuzzleStep(){
+if(levelIndex<puzzleImages.length-1){
+loadPuzzle(levelIndex+1);
+}else{
+puzzleStage.style.display="none";
+geoStage.style.display="block";
+answerInput.focus();
+}
+}
+
+async function cheatSkip(){
+alert("爱酱：这个太难了，无法接受！");
+if(petalStage.style.display!=="none"){
+finishPetalGame(true);
+return;
+}
+if(dodgeStage.style.display!=="none"){
+finishDodge();
+return;
+}
+if(puzzleStage.style.display!=="none"){
+puzzleLocked=true;
+nextPuzzleStep();
+return;
+}
+if(geoStage.style.display!=="none"){
+geoStage.style.display="none";
+panel.style.display="block";
+input.focus();
+return;
+}
+if(panel.style.display!=="none"){
+await unlockFinalStage();
+}
+}
+
+function checkGeo(){
+const userAnswer=answerInput.value.trim().toLowerCase().replace(/\s+/g,"");
+const targetAnswer=STAGE_ANSWER.trim().toLowerCase().replace(/\s+/g,"");
+if(userAnswer===targetAnswer){
+geoStage.style.display="none";
+panel.style.display="block";
+input.focus();
+}else{
+alert("答案不正确，再试一次");
+}
+}
+
+async function check(){
+if(unlocked){return;}
+if(input.value==="panda"){
+await unlockFinalStage();
+}else if(input.value==="pig"){
+switchBackgroundToPig();
+alert("🐷 你居然觉得sensei是pig！！！！");
 }else{
 alert("密码错误");
 }
-
 }
 
-/* 熊猫系统 */
+async function unlockFinalStage(){
+if(unlocked){return;}
+const ok=await ensureRewardDecrypted();
+if(!ok){return;}
+unlocked=true;
+panel.style.display="none";
+reward.classList.add("show");
+setFinalPandaBackground();
+startConfetti();
+startPanda();
+startPraiseAroundReward();
+}
 
-const panda=document.getElementById("panda");
-let reward=document.getElementById("reward");
+function equalBytes(bytes, text){
+if(bytes.length!==text.length){return false;}
+for(let i=0;i<text.length;i++){
+if(bytes[i]!==text.charCodeAt(i)){return false;}
+}
+return true;
+}
+
+async function ensureRewardDecrypted(){
+if(reward.dataset.loaded==="1"){return true;}
+try{
+const resp=await fetch(ENCRYPTED_REWARD_URL,{cache:"no-store"});
+if(!resp.ok){throw new Error("failed to fetch encrypted image");}
+const data=new Uint8Array(await resp.arrayBuffer());
+if(data.length<34){throw new Error("invalid encrypted payload");}
+const magic=data.slice(0,5);
+if(!equalBytes(magic,"RIMG1")){throw new Error("invalid file header");}
+const salt=data.slice(5,21);
+const iv=data.slice(21,33);
+const cipher=data.slice(33);
+
+const enc=new TextEncoder();
+const keyMaterial=await crypto.subtle.importKey(
+"raw",
+enc.encode(REWARD_PASSPHRASE),
+"PBKDF2",
+false,
+["deriveKey"]
+);
+const key=await crypto.subtle.deriveKey(
+{name:"PBKDF2",salt:salt,iterations:200000,hash:"SHA-256"},
+keyMaterial,
+{name:"AES-GCM",length:256},
+false,
+["decrypt"]
+);
+const plain=await crypto.subtle.decrypt({name:"AES-GCM",iv:iv},key,cipher);
+if(rewardObjectUrl){URL.revokeObjectURL(rewardObjectUrl);}
+rewardObjectUrl=URL.createObjectURL(new Blob([plain],{type:REWARD_MIME_TYPE}));
+reward.src=rewardObjectUrl;
+reward.dataset.loaded="1";
+return true;
+}catch(err){
+console.error(err);
+alert("最终图片解密失败，请检查 reward.enc 和密钥配置");
+return false;
+}
+}
 
 function startPanda(){
-
-if(pandaTimer){
-clearInterval(pandaTimer);
+if(pandaTimer){clearInterval(pandaTimer);}
+ensurePandas();
+movePandas();
+pandaTimer=setInterval(movePandas,1400);
 }
 
+function setFinalPandaBackground(){
+setDefaultGradientBackground();
+}
+
+function setDefaultGradientBackground(){
+document.body.style.backgroundImage="linear-gradient(-45deg,#ff9a9e,#fad0c4,#a1c4fd,#c2e9fb)";
+document.body.style.backgroundSize="400% 400%";
+document.body.style.backgroundPosition="";
+document.body.style.backgroundRepeat="no-repeat";
+document.body.style.animation="bgmove 12s infinite linear";
+}
+
+function ensurePandas(){
+if(pandaPool.length>0){return;}
+for(let i=0;i<PANDA_COUNT;i++){
+const panda=document.createElement("img");
+const src=transparentPandaSrc||"imgs/pandas.jpg";
+panda.src=src;
+panda.className="panda blink";
+panda.style.display="none";
+panda.addEventListener("click",movePandas);
+document.body.appendChild(panda);
+pandaPool.push(panda);
+}
+}
+
+function movePandas(){
+const rect=reward.getBoundingClientRect();
+if(rect.width===0||rect.height===0){return;}
+const placed=[];
+for(let i=0;i<pandaPool.length;i++){
+const panda=pandaPool[i];
+const point=findNonOverlapSpot(rect,placed);
+if(!point){
+panda.style.display="none";
+continue;
+}
+placed.push({cx:point.cx,cy:point.cy});
 panda.style.display="block";
-
-movePanda();
-
-pandaTimer=setInterval(movePanda,1000);
-
+panda.style.left=point.x+"px";
+panda.style.top=point.y+"px";
+panda.style.setProperty("--rot",point.rot+"deg");
+}
 }
 
-/* 只从左右探头 */
-
-function movePanda(){
-
-let rect=reward.getBoundingClientRect();
-
-if(rect.width===0 || rect.height===0){
-return;
+function findNonOverlapSpot(rect,placed){
+for(let i=0;i<180;i++){
+const candidate=randomEdgeSpot(rect);
+let hit=false;
+for(let j=0;j<placed.length;j++){
+const dx=candidate.cx-placed[j].cx;
+const dy=candidate.cy-placed[j].cy;
+if(Math.hypot(dx,dy)<PANDA_MIN_DIST){hit=true;break;}
+}
+if(!hit){return candidate;}
+}
+return null;
 }
 
-let side=Math.random()<0.5 ? "left":"right";
-
-/* 只在上半部分探头，并避开上下边缘 */
-let offset=0.12+Math.random()*0.30; // 12% ~ 42%
-
-let size=120;
-
-let x,y;
-let rot;
-
-if(side==="left"){
-
-x=rect.left-size/2;  // 只露半个头
-y=rect.top+rect.height*offset-size/2;
+function randomEdgeSpot(rect){
+const edge=["left","right","top","bottom"][Math.floor(Math.random()*4)];
+const t=0.12+Math.random()*0.76;
+let x=0,y=0,rot=0;
+if(edge==="left"){
+x=rect.left-PANDA_SIZE*EXPOSE_RATIO;
+y=rect.top+rect.height*t-PANDA_SIZE/2;
 rot=-90;
-
 }
-
-if(side==="right"){
-
-x=rect.right-size/2;
-y=rect.top+rect.height*offset-size/2;
+if(edge==="right"){
+x=rect.right-PANDA_SIZE*(1-EXPOSE_RATIO);
+y=rect.top+rect.height*t-PANDA_SIZE/2;
 rot=90;
-
+}
+if(edge==="top"){
+x=rect.left+rect.width*t-PANDA_SIZE/2;
+y=rect.top-PANDA_SIZE*EXPOSE_RATIO;
+rot=0;
+}
+if(edge==="bottom"){
+x=rect.left+rect.width*t-PANDA_SIZE/2;
+y=rect.bottom-PANDA_SIZE*(1-EXPOSE_RATIO);
+rot=180;
+}
+return {x:x,y:y,cx:x+PANDA_SIZE/2,cy:y+PANDA_SIZE/2,rot:rot};
 }
 
-panda.style.left=x+"px";
-panda.style.top=y+"px";
-panda.style.setProperty("--rot",rot+"deg");
-
+function startBackgroundPandas(){
+if(floatPandasHost.dataset.ready==="1"){return;}
+floatPandasHost.dataset.ready="1";
+for(let i=0;i<FLOAT_PANDA_COUNT;i++){
+const panda=document.createElement("img");
+const src=transparentPandaSrc||"imgs/pandas.jpg";
+panda.src=src;
+panda.className="bg-panda";
+const size=60+Math.random()*90;
+const x=Math.random()*window.innerWidth;
+const y=Math.random()*window.innerHeight;
+const alpha=0.14+Math.random()*0.28;
+const dur=10+Math.random()*14;
+const delay=-(Math.random()*dur);
+const dx1=-90+Math.random()*180;
+const dy1=-70+Math.random()*140;
+const dx2=-110+Math.random()*220;
+const dy2=-90+Math.random()*180;
+const dx3=-120+Math.random()*240;
+const dy3=-100+Math.random()*200;
+const dx4=-100+Math.random()*200;
+const dy4=-80+Math.random()*160;
+const s=panda.style;
+s.setProperty("--size",size+"px");
+s.setProperty("--x",x+"px");
+s.setProperty("--y",y+"px");
+s.setProperty("--alpha",alpha.toFixed(2));
+s.setProperty("--dur",dur.toFixed(2)+"s");
+s.setProperty("--delay",delay.toFixed(2)+"s");
+s.setProperty("--dx1",dx1.toFixed(0)+"px");
+s.setProperty("--dy1",dy1.toFixed(0)+"px");
+s.setProperty("--dx2",dx2.toFixed(0)+"px");
+s.setProperty("--dy2",dy2.toFixed(0)+"px");
+s.setProperty("--dx3",dx3.toFixed(0)+"px");
+s.setProperty("--dy3",dy3.toFixed(0)+"px");
+s.setProperty("--dx4",dx4.toFixed(0)+"px");
+s.setProperty("--dy4",dy4.toFixed(0)+"px");
+floatPandasHost.appendChild(panda);
+}
 }
 
-/* 点击熊猫逃跑 */
-
-panda.onclick=function(){
-
-panda.style.transform="scale(0.1) rotate(180deg)";
-
-setTimeout(()=>{
-panda.style.transform="";
-movePanda();
-},300);
-
+function createTransparentImageSrc(path){
+return new Promise(function(resolve){
+const img=new Image();
+img.src=path;
+img.onload=function(){
+const cv=document.createElement("canvas");
+cv.width=img.naturalWidth;
+cv.height=img.naturalHeight;
+const cx=cv.getContext("2d");
+cx.drawImage(img,0,0);
+const d=cx.getImageData(0,0,cv.width,cv.height);
+const arr=d.data;
+for(let i=0;i<arr.length;i+=4){
+const r=arr[i],g=arr[i+1],b=arr[i+2];
+const min=Math.min(r,g,b);
+const max=Math.max(r,g,b);
+const nearWhite=min>218&&max>228&&(max-min)<20;
+if(nearWhite){
+const strength=(min-218)/37;
+arr[i+3]=Math.max(0,Math.min(255,255*(1-strength)));
 }
-
-/* 彩带 */
-
-const canvas=document.getElementById("confetti");
-const ctx=canvas.getContext("2d");
-
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let confettis=[];
-
-function startConfetti(){
-
-for(let i=0;i<150;i++){
-confettis.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*6+2,
-d:Math.random()*5+1
+}
+cx.putImageData(d,0,0);
+resolve(cv.toDataURL("image/png"));
+};
+img.onerror=function(){resolve(path);};
 });
 }
 
+async function switchBackgroundToPig(){
+if(!transparentPigSrc){
+transparentPigSrc=await createTransparentImageSrc("imgs/pig.jpg");
+}
+const allPandas=document.querySelectorAll(".bg-panda,.panda");
+for(let i=0;i<allPandas.length;i++){
+allPandas[i].src=transparentPigSrc;
+}
+}
+
+function ensurePraiseTokens(){
+if(praisePool.length>0){return;}
+for(let i=0;i<PRAISE_COUNT;i++){
+const el=document.createElement("div");
+el.className="praise-token";
+el.textContent="你真棒";
+fxLayer.appendChild(el);
+praisePool.push(el);
+}
+}
+
+function startPraiseAroundReward(){
+ensurePraiseTokens();
+positionPraiseTokens();
+if(!startPraiseAroundReward.timer){
+startPraiseAroundReward.timer=setInterval(positionPraiseTokens,2200);
+}
+}
+
+function positionPraiseTokens(){
+const rect=reward.getBoundingClientRect();
+if(rect.width===0||rect.height===0){return;}
+for(let i=0;i<praisePool.length;i++){
+const el=praisePool[i];
+const edge=["left","right","top","bottom"][Math.floor(Math.random()*4)];
+const t=0.05+Math.random()*0.9;
+const gap=28+Math.random()*85;
+let x=0,y=0;
+if(edge==="left"){x=rect.left-gap;y=rect.top+rect.height*t;}
+if(edge==="right"){x=rect.right+gap;y=rect.top+rect.height*t;}
+if(edge==="top"){x=rect.left+rect.width*t;y=rect.top-gap;}
+if(edge==="bottom"){x=rect.left+rect.width*t;y=rect.bottom+gap;}
+const size=24+Math.random()*68;
+const dur=3.2+Math.random()*4.6;
+const glow=2+Math.random()*2.4;
+const delay=-(Math.random()*dur);
+const s=el.style;
+s.left=x+"px";
+s.top=y+"px";
+s.setProperty("--size",size.toFixed(0)+"px");
+s.setProperty("--dur",dur.toFixed(2)+"s");
+s.setProperty("--glow",glow.toFixed(2)+"s");
+s.setProperty("--delay",delay.toFixed(2)+"s");
+}
+}
+
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+const confettis=[];
+
+function startConfetti(){
+for(let i=0;i<150;i++){
+confettis.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*6+2,d:Math.random()*5+1});
+}
 animate();
 }
-
 function animate(){
-
 ctx.clearRect(0,0,canvas.width,canvas.height);
-
 ctx.fillStyle="white";
 ctx.beginPath();
-
 for(let i=0;i<confettis.length;i++){
-
-let c=confettis[i];
-
+const c=confettis[i];
 ctx.moveTo(c.x,c.y);
 ctx.arc(c.x,c.y,c.r,0,Math.PI*2,true);
-
 }
-
 ctx.fill();
 update();
-
 requestAnimationFrame(animate);
 }
-
 function update(){
-
 for(let i=0;i<confettis.length;i++){
-
-let c=confettis[i];
-
+const c=confettis[i];
 c.y+=c.d;
-
-if(c.y>canvas.height){
-c.y=0;
-c.x=Math.random()*canvas.width;
+if(c.y>canvas.height){c.y=0;c.x=Math.random()*canvas.width;}
+}
 }
 
-}
+window.addEventListener("resize",function(){
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+if(puzzleStage.style.display!=="none"){renderPuzzle(false);}
+if(unlocked){movePandas();positionPraiseTokens();}
+});
 
-}
-
+(async function boot(){
+transparentPandaSrc=await createTransparentImageSrc("imgs/pandas.jpg");
+startBackgroundPandas();
+})();
 </script>
-
 </body>
 </html>
