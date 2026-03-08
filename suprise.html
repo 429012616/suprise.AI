@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Surprise</title>
+<style>
+body{
+font-family:Arial;
+text-align:center;
+margin-top:120px;
+}
+img{display:none;width:300px;}
+</style>
+</head>
+
+<body>
+
+<h2>🎁 输入密码领取奖励</h2>
+
+<input id="pwd" type="password">
+<button onclick="check()">解锁</button>
+
+<br><br>
+
+<img id="reward" src="reward.jpg">
+
+<script>
+function check(){
+if(document.getElementById("pwd").value=="1234"){
+document.getElementById("reward").style.display="block";
+}else{
+alert("密码错误");
+}
+}
+</script>
+
+</body>
+</html>
