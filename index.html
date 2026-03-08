@@ -2,35 +2,187 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Surprise</title>
+<title>🎁 Surprise</title>
+
 <style>
+
 body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
 font-family:Arial;
-text-align:center;
-margin-top:120px;
+background: linear-gradient(-45deg,#ff9a9e,#fad0c4,#a1c4fd,#c2e9fb);
+background-size:400% 400%;
+animation:bgmove 12s infinite linear;
+overflow:hidden;
 }
+
+@keyframes bgmove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+#panel{
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 20px 40px rgba(0,0,0,0.2);
+text-align:center;
+animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-10px)}
+100%{transform:translateY(0)}
+}
+
+input{
+padding:10px;
+font-size:18px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+button{
+padding:10px 20px;
+font-size:18px;
+border:none;
+border-radius:8px;
+background:#ff6b81;
+color:white;
+cursor:pointer;
+margin-left:10px;
+}
+
+button:hover{
+background:#ff4757;
+}
+
+#reward{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0.8);
+opacity:0;
+max-width:80%;
+border-radius:20px;
+box-shadow:0 20px 40px rgba(0,0,0,0.3);
+transition:all 1s ease;
+}
+
+.show{
+opacity:1 !important;
+transform:translate(-50%,-50%) scale(1) !important;
+}
+
+/* confetti canvas */
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+
 </style>
 </head>
 
 <body>
 
+<div id="panel">
 <h2>🎁 输入密码领取奖励</h2>
-
 <input id="pwd" type="password">
 <button onclick="check()">解锁</button>
-
-<br><br>
+</div>
 
 <img id="reward" src="imgs/image.jpg">
 
+<canvas id="confetti"></canvas>
+
 <script>
+
 function check(){
+
 if(document.getElementById("pwd").value=="1234"){
-document.getElementById("reward").style.display="block";
+
+document.getElementById("panel").style.display="none";
+
+let img=document.getElementById("reward");
+img.classList.add("show");
+
+startConfetti();
+
 }else{
 alert("密码错误");
 }
+
 }
+
+/* confetti effect */
+
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let confettis=[];
+
+function startConfetti(){
+
+for(let i=0;i<150;i++){
+confettis.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*6+2,
+d:Math.random()*5+1
+});
+}
+
+animate();
+}
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="rgba(255,255,255,0.8)";
+ctx.beginPath();
+
+for(let i=0;i<confettis.length;i++){
+
+let c=confettis[i];
+
+ctx.moveTo(c.x,c.y);
+ctx.arc(c.x,c.y,c.r,0,Math.PI*2,true);
+
+}
+
+ctx.fill();
+update();
+
+requestAnimationFrame(animate);
+}
+
+function update(){
+
+for(let i=0;i<confettis.length;i++){
+
+let c=confettis[i];
+
+c.y+=c.d;
+
+if(c.y>canvas.height){
+c.y=0;
+c.x=Math.random()*canvas.width;
+}
+
+}
+
+}
+
 </script>
 
 </body>
