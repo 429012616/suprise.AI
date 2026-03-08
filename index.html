@@ -366,7 +366,7 @@ animation-delay:var(--delay,0s);
 
 <div id="petalStage">
 <h2 id="petalTitle">🌸 花瓣收集</h2>
-<p id="petalHint">30秒内收集足够花瓣即可进入拼图关</p>
+<p id="petalHint">30秒内收集足够花瓣，不要碰到脏东西！！！</p>
 <p id="petalStatus">已收集 0 / 40（剩余 30s）</p>
 <div id="petalArena"></div>
 <div class="stage-actions">
@@ -401,7 +401,7 @@ animation-delay:var(--delay,0s);
 
 <div id="geoStage">
 <h2>❓ 问答挑战</h2>
-<p>如果SENSEI所在位置的经度为x，纬度为y，则经度为（180-x），纬度为（90-y）的国家是：（英文回答，首字母小写）</p>
+<p>SENSEI现在所在位置的经度为x，纬度为y，则经度为（180-x），纬度为（90-y）的国家是：（英文回答，首字母小写）</p>
 <input id="answerInput" type="text" placeholder="Input English answer">
 <button onclick="checkGeo()">提交答案</button>
 <div class="stage-actions">
@@ -980,7 +980,7 @@ return;
 }
 const ok=await unlockFinalStage(passphrase);
 if(!ok){
-alert("答案不正确，再试一次");
+alert("SENSEI不是这种生物，请再试一次！");
 }
 }
 
