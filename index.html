@@ -87,6 +87,9 @@ display:none;  /* 初始隐藏 */
 transition:0.3s;
 z-index:4;
 mix-blend-mode:multiply; /* 让白底视觉上透明 */
+transform-origin:center center;
+clip-path:inset(0 0 50% 0); /* 只显示上半部分（头部） */
+--rot:0deg;
 }
 
 /* 熊猫眨眼 */
@@ -96,8 +99,8 @@ animation:blink 4s infinite;
 }
 
 @keyframes blink{
-0%,92%,100%{transform:scaleY(1);}
-95%{transform:scaleY(0.1);}
+0%,92%,100%{transform:rotate(var(--rot)) scaleY(1);}
+95%{transform:rotate(var(--rot)) scaleY(0.1);}
 }
 
 canvas{
@@ -194,11 +197,13 @@ let offset=0.12+Math.random()*0.30; // 12% ~ 42%
 let size=120;
 
 let x,y;
+let rot;
 
 if(side==="left"){
 
 x=rect.left-size/2;  // 只露半个头
 y=rect.top+rect.height*offset-size/2;
+rot=-90;
 
 }
 
@@ -206,11 +211,13 @@ if(side==="right"){
 
 x=rect.right-size/2;
 y=rect.top+rect.height*offset-size/2;
+rot=90;
 
 }
 
 panda.style.left=x+"px";
 panda.style.top=y+"px";
+panda.style.setProperty("--rot",rot+"deg");
 
 }
 
