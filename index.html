@@ -83,8 +83,7 @@ transform:translate(-50%,-50%) scale(1) !important;
 #panda{
 position:absolute;
 width:120px;
-pointer-events:auto;
-display:none;
+display:none;  /* 初始隐藏 */
 transition:0.3s;
 z-index:4;
 }
@@ -142,7 +141,6 @@ let img=document.getElementById("reward");
 img.classList.add("show");
 
 startConfetti();
-
 startPanda();
 
 }else{
@@ -166,13 +164,13 @@ setInterval(movePanda,1000);
 
 }
 
-/* 随机探头 */
+/* 只从左右探头 */
 
 function movePanda(){
 
 let rect=reward.getBoundingClientRect();
 
-let side=Math.floor(Math.random()*4);
+let side=Math.random()<0.5 ? "left":"right";
 
 let offset=Math.random();
 
@@ -180,35 +178,22 @@ let size=120;
 
 let x,y;
 
-if(side===0){ // 上
-x=rect.left+rect.width*offset-size/2;
-y=rect.top-size/2;
-}
+if(side==="left"){
 
-if(side===1){ // 下
-x=rect.left+rect.width*offset-size/2;
-y=rect.bottom-size/2;
-}
-
-if(side===2){ // 左
-x=rect.left-size/2;
+x=rect.left-size/2;  // 只露半个头
 y=rect.top+rect.height*offset-size/2;
+
 }
 
-if(side===3){ // 右
+if(side==="right"){
+
 x=rect.right-size/2;
 y=rect.top+rect.height*offset-size/2;
+
 }
 
 panda.style.left=x+"px";
 panda.style.top=y+"px";
-
-/* 10%概率跳出来 */
-
-if(Math.random()<0.1){
-panda.style.left=(rect.left+rect.width/2-60)+"px";
-panda.style.top=(rect.top+rect.height/2-60)+"px";
-}
 
 }
 
@@ -217,6 +202,7 @@ panda.style.top=(rect.top+rect.height/2-60)+"px";
 panda.onclick=function(){
 
 panda.style.transform="scale(0.1) rotate(180deg)";
+
 setTimeout(()=>{
 panda.style.transform="";
 movePanda();
