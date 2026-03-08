@@ -370,7 +370,7 @@ animation-delay:var(--delay,0s);
 <p id="petalStatus">已收集 0 / 40（剩余 30s）</p>
 <div id="petalArena"></div>
 <div class="stage-actions">
-<button class="cheat-btn" onclick="cheatSkip()">作弊跳过本关</button>
+<button class="cheat-btn" onclick="cheatSkip()">请求SENSEI发动魔法</button>
 </div>
 </div>
 
@@ -386,7 +386,7 @@ animation-delay:var(--delay,0s);
 <button id="btnRight">右移 ➡️</button>
 </div>
 <div class="stage-actions">
-<button class="cheat-btn" onclick="cheatSkip()">作弊跳过本关</button>
+<button class="cheat-btn" onclick="cheatSkip()">请求SENSEI发动魔法</button>
 </div>
 </div>
 
@@ -395,7 +395,7 @@ animation-delay:var(--delay,0s);
 <p id="puzzleHint">点击与空白块相邻的拼图块完成复原</p>
 <div id="puzzleBoard"></div>
 <div id="puzzleActions">
-<button class="cheat-btn" onclick="cheatSkip()">作弊跳过本关</button>
+<button class="cheat-btn" onclick="cheatSkip()">请求SENSEI发动魔法</button>
 </div>
 </div>
 
@@ -405,7 +405,7 @@ animation-delay:var(--delay,0s);
 <input id="answerInput" type="text" placeholder="Input English answer">
 <button onclick="checkGeo()">提交答案</button>
 <div class="stage-actions">
-<button class="cheat-btn" onclick="cheatSkip()">作弊跳过本关</button>
+<button class="cheat-btn" onclick="cheatSkip()">请求SENSEI发动魔法</button>
 </div>
 </div>
 
@@ -932,7 +932,7 @@ answerInput.focus();
 }
 
 async function cheatSkip(){
-alert("爱酱：这个太难了，无法接受！");
+alert("爱酱：这个太难了，无法接受！（SENSEI发动了魔法~~~~~~~：呼呼呼，嗖嗖嗖，嘻嘻嘻，嚯嚯嚯，本关被跳过了！）");
 if(petalStage.style.display!=="none"){
 finishPetalGame(true);
 return;
