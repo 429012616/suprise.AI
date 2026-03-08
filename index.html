@@ -366,7 +366,7 @@ animation-delay:var(--delay,0s);
 
 <div id="petalStage">
 <h2 id="petalTitle">🌸 花瓣收集</h2>
-<p id="petalHint">30秒内收集足够花瓣即可进入下一关</p>
+<p id="petalHint">30秒内收集足够花瓣即可进入拼图关</p>
 <p id="petalStatus">已收集 0 / 40（剩余 30s）</p>
 <div id="petalArena"></div>
 <div class="stage-actions">
@@ -375,11 +375,11 @@ animation-delay:var(--delay,0s);
 </div>
 
 <div id="dodgeStage">
-<h2 id="dodgeTitle">🚧 躲避障碍（熊猫不能吃食物，更不能吃屎！！！）</h2>
+<h2 id="dodgeTitle">🚧 躲避障碍（SENSEI不能吃食物，更不能吃屎！！！）</h2>
 <p id="dodgeHint">吃到食物 +2s，碰到 💩 直接结束</p>
 <p id="dodgeStatus">剩余 30s</p>
 <div id="dodgeArena">
-<div id="runner" class="runner">🐼</div>
+<div id="runner" class="runner">🐷</div>
 </div>
 <div id="dodgeMobile">
 <button id="btnLeft">⬅️ 左移</button>
@@ -442,7 +442,6 @@ const panel=document.getElementById("panel");
 const input=document.getElementById("pwd");
 const reward=document.getElementById("reward");
 const ENCRYPTED_REWARD_URL="imgs/reward.enc";
-const REWARD_PASSPHRASE="AiyoSensei_2026_LoveKey#47";
 const REWARD_MIME_TYPE="image/jpeg";
 const STAGE_ANSWER="russia";
 
@@ -933,7 +932,7 @@ answerInput.focus();
 }
 
 async function cheatSkip(){
-alert("爱酱：这个太难了，无法接受！（熊猫发动魔法~~~~呼呼呼呼，噌噌噌噌，嗦嗦嗦嗦，本关被跳过！）");
+alert("爱酱：这个太难了，无法接受！");
 if(petalStage.style.display!=="none"){
 finishPetalGame(true);
 return;
@@ -969,20 +968,26 @@ alert("答案不正确，再试一次");
 
 async function check(){
 if(unlocked){return;}
-if(input.value==="panda"){
-await unlockFinalStage();
-}else if(input.value==="pig"){
+const passphrase=input.value.trim();
+if(!passphrase){
+alert("请输入答案");
+return;
+}
+if(passphrase.toLowerCase()==="pig"){
 switchBackgroundToPig();
 alert("🐷 你居然觉得sensei是pig！！！！");
-}else{
-alert("密码错误");
+return;
+}
+const ok=await unlockFinalStage(passphrase);
+if(!ok){
+alert("答案不正确，再试一次");
 }
 }
 
-async function unlockFinalStage(){
-if(unlocked){return;}
-const ok=await ensureRewardDecrypted();
-if(!ok){return;}
+async function unlockFinalStage(passphrase){
+if(unlocked){return true;}
+const ok=await ensureRewardDecrypted(passphrase);
+if(!ok){return false;}
 unlocked=true;
 panel.style.display="none";
 reward.classList.add("show");
@@ -990,6 +995,7 @@ setFinalPandaBackground();
 startConfetti();
 startPanda();
 startPraiseAroundReward();
+return true;
 }
 
 function equalBytes(bytes, text){
@@ -1000,7 +1006,7 @@ if(bytes[i]!==text.charCodeAt(i)){return false;}
 return true;
 }
 
-async function ensureRewardDecrypted(){
+async function ensureRewardDecrypted(passphrase){
 if(reward.dataset.loaded==="1"){return true;}
 try{
 const resp=await fetch(ENCRYPTED_REWARD_URL,{cache:"no-store"});
@@ -1016,7 +1022,7 @@ const cipher=data.slice(33);
 const enc=new TextEncoder();
 const keyMaterial=await crypto.subtle.importKey(
 "raw",
-enc.encode(REWARD_PASSPHRASE),
+enc.encode(passphrase),
 "PBKDF2",
 false,
 ["deriveKey"]
@@ -1036,7 +1042,6 @@ reward.dataset.loaded="1";
 return true;
 }catch(err){
 console.error(err);
-alert("最终图片解密失败，请检查 reward.enc 和密钥配置");
 return false;
 }
 }
