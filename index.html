@@ -350,7 +350,7 @@ animation-delay:var(--delay,0s);
 </div>
 
 <div id="dodgeStage">
-<h2 id="dodgeTitle">🚧 躲避障碍（如果吃到食物，对SENSEI的减肥不利，吃到屎的话！更不利！！！）</h2>
+<h2 id="dodgeTitle">🚧 躲避障碍</h2>
 <p id="dodgeHint">吃到食物 +2s，碰到 💩 直接结束</p>
 <p id="dodgeStatus">剩余 30s</p>
 <div id="dodgeArena">
@@ -388,9 +388,6 @@ animation-delay:var(--delay,0s);
 <h2>🐷 SENSEI是什么动物？（In English）</h2>
 <input id="pwd" type="password" placeholder="输入密码">
 <button onclick="check()">解锁</button>
-<div class="stage-actions">
-<button class="cheat-btn" onclick="cheatSkip()">作弊跳过本关</button>
-</div>
 </div>
 
 <img id="reward" alt="reward">
@@ -751,7 +748,7 @@ rocks.splice(i,1);
 continue;
 }
 const cr=r.el.getBoundingClientRect();
-const hitBox=r.type==="poop"?shrinkRect(cr,0.5):shrinkRect(cr,0.68);
+const hitBox=r.type==="poop"?shrinkRect(cr,0.4):shrinkRect(cr,0.58);
 if(isHit(rr,hitBox)){
 if(r.type==="poop"){
 failDodge();
@@ -930,9 +927,6 @@ geoStage.style.display="none";
 panel.style.display="block";
 input.focus();
 return;
-}
-if(panel.style.display!=="none"){
-await unlockFinalStage();
 }
 }
 
